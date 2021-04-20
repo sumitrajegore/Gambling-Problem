@@ -42,6 +42,13 @@ class Gamblar{
         }
         game.LuckyGame();
         compute.compute();
+
+        if(constant.monthly_stake > constant.monthly_investment) {
+            var user_decide = readline.question('Press 1 to continue game : ')
+            if(user_decide == 1){
+                new Gamblar().checkResult();
+            }
+        }
     }
 }   
 module.exports = new Gamblar();
