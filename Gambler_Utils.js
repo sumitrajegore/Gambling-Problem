@@ -1,6 +1,9 @@
 let constant = require('./Gambler')
 let monthCompute = require('./monthCount')
 let compute = new monthCompute(constant)
+const LuckyGame = require('./luckiestGame')
+let game = new LuckyGame
+let readline = require('readline-sync')
 
 class Gamblar{
     constructor(){ }
@@ -24,15 +27,21 @@ class Gamblar{
                 //console.log(`Score: ${result}`);
                 }
             }  
-            if (result > constant.gambler_stack_loose ) {
-                console.log(`Game win day ${day} amount : $${result}`);
-            } else {
-                console.log(`Game loss day ${day} amount : $${result}`);
+            switch(result){
+                case ( constant.gambler_stack_loose ) :
+                    console.log(`Result of day ${day} is Gambler loss $${result}`);
+                    constant.unluckiest_days[++constant.unluckiest_count] = day; 
+                    break;
+                default :
+                    console.log(`Result of day ${day} is Gambler Won $${result}`);
+                    constant.luckiest_days[++constant.luckiest_count] = day;
+                    break;
             }
             constant.monthly_investment += constant.STACK_AMOUNT;
             constant.monthly_stake += result;
         }
+        game.LuckyGame();
         compute.compute();
     }
-}
+}   
 module.exports = new Gamblar();
